@@ -1,4 +1,4 @@
-├── Add_BD_SOC.py              # Read bd_soc.csv, adding soil bulk density and organic carbon concentration data to the NetCDF files.
+├── model_code                 # Code for training model and predicting LAI       
 └── plot_Fig                   # Code and data for plotting 
     ├── FigX                   # Code for plotting Fig1-Fig7
     ├── TableX                 # Code for plotting figures of Table 3
