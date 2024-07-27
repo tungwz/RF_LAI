@@ -1,0 +1,10 @@
+├── Global_GLASS_LAI_0.5deg_2020.nc      
+|	├── GLASS_LAI              # Monthly LAI drived from 500m 8 day GLASS LAI product
+│       ├── GLASS_LAI_T            # Monthly LAI drived from 500m 8 day GLASS LAI product and MODIS VCF use GLASS_LAI/Tree_percent
+│	├── GLASS_LAI_V            # Monthly LAI drived from 500m 8 day GLASS LAI product and MODIS VCF use GLASS_LAI/(Tree_percent+Grass_percent) 
+│	├── PCTT                   # Tree percent in urban areas (MODIS VCF)
+│       └── VCF                    # Sum of tree and grass percent in urban areas (MODIS VCF)
+|── Global_MODIS_LAI_YYYY_v61.nc
+│   └── URBAN_TREE_LAI         # Monthly LAI drived from reprocessed MODIS LAI product, the dimension of LC from 1 to 7 represents NET, BET, NDT, BDT, MF, Urban and grid tree
+└── Global_Urban_LAI_YYYY_v61.nc
+    └── URBAN_TREE_LAI         # Monthly LAI drived from RF LAI product, the dimension of LC from 1 to 7 represents NET, BET, NDT, BDT, MF, Urban and grid tree
