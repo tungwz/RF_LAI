@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+
+@author: Wenzong Dong
+
+"""
+
 import numpy as np
 import pandas as pd
 import netCDF4 as nc4
@@ -10,6 +16,7 @@ from sklearn.model_selection import train_test_split
 from flaml import AutoML
 import multiprocessing as mp
 
+# The remapping equation for converting 1km data to 500m data
 def remap(in_array, out_array):
     out_array[::2,::2]  = in_array[:,:]
     out_array[1::2,::2] = in_array[:,:]
@@ -18,10 +25,12 @@ def remap(in_array, out_array):
 
     return out_array
 
+# Loading training data
 def load_train_data(reg, iyear, imon):
 
     loop_i = 0
 
+    # region loop
     for i in reg:
         mod    = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_' \
                   +str(int(i[3]))+'.MOD'+str(iyear)+'.nc'
@@ -69,9 +78,12 @@ def load_train_data(reg, iyear, imon):
             vp   = remap(svp  , lvp  ).flatten()
             sw   = remap(ssw  , lsw  ).flatten()
 
+            # Calculating VPD
             vpd = 1/2*0.6108*(np.exp((17.269*tmax)/(237.3+tmax))+np.exp((17.269*tmin)/(237.3+tmin))) - vp
+            # Convert units from kJ m-2 day-1 to W/m2
             sw  = sw*1000/86400
 
+            # mask non-land areas
             vp  [lc==0] = 0
             sw  [lc==0] = 0
             tmax[lc==0] = 0
@@ -90,9 +102,7 @@ def load_train_data(reg, iyear, imon):
             lat_reg = lat [valid_indices]
             lon_reg = lon [valid_indices]
 
-            # print(len(valid_indices[0]))
             if len(valid_indices[0])>=10:
-                # with part of meteorological vars but exclude DEM
                 var  = np.array((lai_reg, htop_reg, tmax_reg, tmin_reg, prec_reg, sw_reg, vp_reg, vpd_reg))
                 data = pd.DataFrame(var.T, columns=['lai','htop','tmax','tmin','pre','sw','vp', 'vpd'])
 
@@ -114,6 +124,7 @@ def load_train_data(reg, iyear, imon):
 
     return x_train, x_test, y_train, y_test
 
+# Loading predicting data
 def load_predict_data(reg, iyear, imon):
 
     mod    = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_' \
@@ -164,9 +175,12 @@ def load_predict_data(reg, iyear, imon):
     vp   = remap(svp  , lvp  ).flatten()
     sw   = remap(ssw  , lsw  ).flatten()
 
+    # Calculating VPD
     vpd = 1/2*0.6108*(np.exp((17.269*tmax)/(237.3+tmax))+np.exp((17.269*tmin)/(237.3+tmin))) - vp
+    # Convert units from kJ m-2 day-1 to W/m2
     sw  = sw*1000/86400
 
+    # mask non-land areas
     vp  [lc==0] = 0
     sw  [lc==0] = 0
     tmax[lc==0] = 0
@@ -175,6 +189,7 @@ def load_predict_data(reg, iyear, imon):
 
     return lc, lat, lon, htop, tmax, tmin, prec, vp, sw, vpd #, lat_, lon_
 
+# Producing LAI data of ever 5x5deg region
 def process_region(ireg):
     reg_lc, reg_lat, reg_lon, reg_htop, reg_tmax, reg_tmin, reg_prec, reg_vp, reg_sw, reg_vpd = load_predict_data(ireg, iyear, i)
 
@@ -216,6 +231,7 @@ for iyear in range(2000,2021,1):
 
         automl = AutoML()
 
+        # model parameter setting
         setting = {
             "time_budget":1800,
             "metric": 'rmse',
