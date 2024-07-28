@@ -3,7 +3,8 @@
 This repository is used to produce urban tree LAI and data analysis associated with the manuscript:
 > "A Global Urban Tree Leaf Area Index Dataset for Urban Climate Modeling"
 
-Code for model train and produce data can be found in the model_code directory and associated manuscript figures are available at plot_Fig directory.
+The Code for model training and producing data can be found in the model_code directory.
+The Code and data used to create figures in the manuscript are available at plot_Fig directory.
 
 <br>
 
@@ -17,4 +18,7 @@ Code for model train and produce data can be found in the model_code directory a
     ├── map_site               # 14 sites observation LAI from GBOV/VALERI/Boston University
     └── Timecsv                # RF LAI and reprocessed MODIS LAI for 14 sites
 ```
+<br>
 
+**Usage**
+Code is mostly written in Python with dependencies including sklearn, flaml, numpy, pandas, xarray, matplotlib, seaborn, scienceplots and cartopy. The rest of the code is written by NCL
