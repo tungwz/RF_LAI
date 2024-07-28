@@ -1,8 +1,10 @@
 # Data descrption for netCDF
 The data in this file are global monthly LAI used for plotting the Fig5-Fig7 in the manuscript, the data generated from GLSS LAI, reprocessed MODIS LAI and our model, all with a resolution of 0.5°.
 <br>
+**GLASS LAI:**
 Global_GLASS_LAI_0.5deg_2020.nc is the global urban LAI for 2020 derived from the GLASS LAI product. 
 <br>
+**Reprocessed MODIS LAI and RF LAI:**
 Global_MODIS_LAI_YYYY_v61.nc and Global_Urban_LAI_YYYY_v61.nc are derived from reprocessed MODIS LAI and our model predictions, respectively. However, these two datasets include not only urban areas but also LAI for other land types of trees.
 <br>
 **Directory:**
