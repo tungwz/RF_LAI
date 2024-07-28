@@ -2,7 +2,7 @@
 └── plot_Fig                   # Code and data for plotting 
     ├── FigX                   # Code for plotting Fig1-Fig7
     ├── TableX                 # Code for plotting figures of Table 3
-    ├── nc_data                # 0.5 deg Global LAI data for plotting Fig 5/6/7
+    ├── nc_data                # 0.5 deg global LAI data for plotting Fig 5/6/7
     ├── map_site               # 14 sites observation LAI from GBOV/VALERI/Boston University
     └── Timecsv                # RF LAI and reprocessed MODIS LAI for 14 sites
 
