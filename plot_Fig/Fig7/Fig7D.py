@@ -78,6 +78,6 @@ for i in range(12):
 
     n=1+i
     plt.subplot(3,4,n)
-    path='./Fig8D.png'
+    path='./Fig7D.png'
     draw_distribution_histogram(glai, tlai, vlai, path, i+1)
 plt.savefig(path, dpi=300)

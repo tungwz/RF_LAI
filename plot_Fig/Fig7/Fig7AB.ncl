@@ -23,7 +23,7 @@ begin
  string_tile = (/"(A)","(B)","(C)","(D)","(E)","(F)","(G)","(H)","(I)","(J)","(K)","(L)","(M)","(N)","(O)"/)
 
  plot = new(2,graphic)
- wks  = gsn_open_wks("pdf", "Fig8AB")
+ wks  = gsn_open_wks("pdf", "Fig7AB")
 
  imod = 0
  irf  = 0
