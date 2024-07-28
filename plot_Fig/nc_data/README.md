@@ -5,14 +5,14 @@ Global_MODIS_LAI_YYYY_v61.nc and Global_Urban_LAI_YYYY_v61.nc are derived from r
 <br>
 **Directory:**
 ```bash
-|—— Global_GLASS_LAI_0.5deg_2020.nc 
-│	├── GLASS_LAI        # Monthly LAI drived from 500m 8-day GLASS LAI product 
-│   ├── GLASS_LAI_T      # Monthly LAI is derived from the 500m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI/(Tree_percent).
-│	├── GLASS_LAI_V      # Monthly LAI is derived from the 500m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI (Tree_percent+Grass_percent).
-│	├── PCTT             # Tree percent in urban areas (MODIS VCF)
-│   └── VCF              # Sum of tree and grass percent in urban areas (MODIS VCF)
-|── Global_MODIS_LAI_YYYY_v61.nc
-│   └── URBAN_TREE_LAI   # Monthly LAI drived from reprocessed MODIS LAI product, the dimension of LC from 1 to 7 represents NET, BET, NDT, BDT, MF, Urban and grid tree
+│—— Global_GLASS_LAI_0.5deg_2020.nc 
+│    ├── GLASS_LAI        # Monthly LAI drived from 500m 8-day GLASS LAI product 
+│    ├── GLASS_LAI_T      # Monthly LAI is derived from the 500m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI/(Tree_percent).
+│    ├── GLASS_LAI_V      # Monthly LAI is derived from the 500m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI (Tree_percent+Grass_percent).
+│    ├── PCTT             # Tree percent in urban areas (MODIS VCF)
+│    └── VCF              # Sum of tree and grass percent in urban areas (MODIS VCF)
+│── Global_MODIS_LAI_YYYY_v61.nc
+│    └── URBAN_TREE_LAI   # Monthly LAI drived from reprocessed MODIS LAI product, the dimension of LC from 1 to 7 represents NET, BET, NDT, BDT, MF, Urban and grid tree
 └── Global_Urban_LAI_YYYY_v61.nc
-    └── URBAN_TREE_LAI   # Monthly LAI drived from RF LAI product, the dimension of LC from 1 to 7 represents NET, BET, NDT, BDT, MF, Urban and grid tree
+     └── URBAN_TREE_LAI   # Monthly LAI drived from RF LAI product, the dimension of LC from 1 to 7 represents NET, BET, NDT, BDT, MF, Urban and grid tree
 ```
