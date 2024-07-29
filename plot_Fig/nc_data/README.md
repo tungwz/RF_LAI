@@ -14,9 +14,9 @@ Global_MODIS_LAI_YYYY_v61.nc and Global_Urban_LAI_YYYY_v61.nc are derived from r
 **Directory:**
 ```bash
 │—— Global_GLASS_LAI_0.5deg_2020.nc 
-│    ├── GLASS_LAI        # Monthly LAI drived from 500m 8-day GLASS LAI product 
-│    ├── GLASS_LAI_T      # Monthly LAI is derived from the 500m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI/(Tree_percent).
-│    ├── GLASS_LAI_V      # Monthly LAI is derived from the 500m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI (Tree_percent+Grass_percent).
+│    ├── GLASS_LAI        # Monthly LAI drived from 250m 8-day GLASS LAI product 
+│    ├── GLASS_LAI_T      # Monthly LAI is derived from the 250m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI/(Tree_percent).
+│    ├── GLASS_LAI_V      # Monthly LAI is derived from the 250m 8-day GLASS LAI product and MODIS VCF data, using the formula LAI = GLASS_LAI (Tree_percent+Grass_percent).
 │    ├── PCTT             # Tree percent in urban areas (MODIS VCF)
 │    └── VCF              # Sum of tree and grass percent in urban areas (MODIS VCF)
 │── Global_MODIS_LAI_YYYY_v61.nc
