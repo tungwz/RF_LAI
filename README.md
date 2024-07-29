@@ -5,7 +5,7 @@ This repository is used to produce urban tree LAI and data analysis associated w
 
 The Code for model training and producing data can be found in the model_code directory.
 
-The Code and data used to create figures in the manuscript are available at plot_Fig directory. Data descriptions can also be found in this directory
+The Code and data used to create figures in the manuscript are available at plot_Fig directory. Data descriptions can also be found in this directory.
 
 
 **Directory:**
@@ -24,4 +24,4 @@ The Code and data used to create figures in the manuscript are available at plot
 <br>
 Code is mostly written in Python with dependencies including sklearn, flaml, numpy, pandas, xarray, matplotlib, seaborn, scienceplots and cartopy. 
 
-The rest of the code is written in NCL
+The rest of the code is written in NCL.
