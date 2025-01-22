@@ -33,7 +33,7 @@ for i in range(len(info['site'])):
 	'size'   : 25,
 	}
 
-	mod = ds['MOD_LAI'].values
+	mod = ds['Nature'].values
 	opt = ds['RF_LAI'].values
 	sai = ds['SAI'].values
 	gla = ds2['GLASS_LAI'].values
@@ -52,7 +52,7 @@ for i in range(len(info['site'])):
 
 	ax.set_title(u'%s, %s' %(info['site'][i],lc), fontproperties='DejaVu Sans',fontsize=25, loc='left')
 
-	ax.set_ylabel('LAI/SAI($m^2/m^2$)',font2)   #  $m^3s^{-1}$
+	ax.set_ylabel('LAI/SAI(m${^2}$/m${^2}$)',font2)   #  $m^3s^{-1}$
 
 	if (i>=0):
 		xx = range(0,nyear*12,1)
@@ -89,11 +89,11 @@ for i in range(len(info['site'])):
 
 	plt.plot(range(nyear*12),opt, label='RF LAI',c='#B11927',linewidth = '4',zorder=1)
 	plt.plot(range(nyear*12),sai, label='SAI',c='#ef767a',linewidth = '4',zorder=1)
+	plt.plot(range(nyear*12),mod, label='Natural tree LAI',c='k',linewidth = '4',zorder=1)
 	plt.plot(range(nyear*12),gla_m, label='GLASS LAI',c='#456990',linewidth = '4',zorder=1)
 
-
 	if (ii==0):
-		plt.legend(fontsize=25)
+		plt.legend(fontsize=19, loc='upper left')
 		ii = 1
 
 	plt.xlim(-1,nyear*12+0.5)

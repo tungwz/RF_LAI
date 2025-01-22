@@ -6,7 +6,6 @@
 """
 
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import scienceplots
 from matplotlib.ticker import MultipleLocator
@@ -14,201 +13,72 @@ from matplotlib.ticker import MultipleLocator
 plt.style.use(['science','no-latex', 'retro'])
 plt.rc('font', family='DejaVu Sans')
 
-csv_dir = "../Timecsv"
-info = pd.read_excel("./Select_Site.xlsx")
+rf_r2_train  =  [0.911294,0.902428,0.921940,0.917340,0.856510,0.730932,0.718836,0.753519,0.864153,0.909424,0.904237,0.910992]
+rf_r2_test   =  [0.905040,0.896305,0.915500,0.910550,0.846604,0.716097,0.703791,0.740173,0.854272,0.902634,0.897740,0.903906]
+rf_rmse_train=  [0.708019,0.718341,0.646465,0.640623,0.676566,0.763007,0.774443,0.753300,0.680219,0.647291,0.701806,0.701780]
+rf_rmse_test =  [0.732536,0.740515,0.672571,0.666334,0.699434,0.783827,0.795072,0.773461,0.704458,0.671039,0.725105,0.729037]
 
-fig  = plt.figure(figsize=(25,25))
-nrow = 2
+
+lg_r2_train  =  [0.927759,0.935071,0.979784,0.926803,0.887112,0.756254,0.863329,0.808071,0.871489,0.948507,0.968025,0.924065]
+lg_r2_test   =  [0.910683,0.905887,0.923779,0.914274,0.849360,0.725475,0.724030,0.758181,0.857434,0.901292,0.904394,0.908468]
+lg_rmse_train=  [0.638941,0.585988,0.328991,0.602840,0.600099,0.726217,0.539942,0.664733,0.661596,0.488054,0.405531,0.648198]
+lg_rmse_test =  [0.710437,0.705472,0.638773,0.652318,0.693123,0.770772,0.767429,0.746176,0.696772,0.675646,0.701115,0.711521]
+
+fig  = plt.figure(figsize=(30,10))
+nrow = 1
 ncol = 2
 
 types = np.asarray(['NET','BET','NDT','BDT', 'MF'])
-colors= ['#4477AA','#66CCEE','#228833','#CCBB44','#EE6677','#AA3377','#BBBBBB']
+# colors= ['#4477AA','#66CCEE','#228833','#CCBB44','#EE6677','#AA3377','#BBBBBB']
+# colors= ['#4477AA','#66CCEE','#228833','#CCBB44','#1f77b4','#ff7f0e','#BBBBBB']
+colors= ['#4477AA','#66CCEE','#228833','#CCBB44','#ef767a','#456990','#BBBBBB']
 
-plt.subplots_adjust(hspace=0.25, wspace=0.25)
-for irow in range(3):
+plt.subplots_adjust(top=0.91, bottom=0.12, left=0.09, right=0.97, hspace=0.57, wspace=0.42)
+for irow in range(2):
     ax = fig.add_subplot(nrow,ncol,irow+1)
 
-    net_mod = []
-    net_rf  = []
-    ndt_mod = []
-    ndt_rf  = []
-    bet_mod = []
-    bet_rf  = []
-    bdt_mod = []
-    bdt_rf  = []
-    mf_mod  = []
-    mf_rf   = []
-    net_obs = []
-    ndt_obs = []
-    bet_obs = []
-    bdt_obs = []
-    mf_obs  = []
-
-    mod = []
-    rf  = []
-    obs = []
-    for i in range(len(info['site'])):
-        ds = pd.read_csv(csv_dir+'/%s.csv' % info['site'][i])
-        ds2= pd.read_csv('../map_site/%s_map.csv' % info['site'][i])
-        font2 = {
-                'weight' : 'normal',
-                'size'   : 23,
-                }
-
-        if irow==0:
-            mod.append(ds['MOD_LAI'].values)
-            rf.append(ds['RF_LAI'].values)
-
-            if info['lc'][i]=='NET':
-                net_mod.append(ds['MOD_LAI'].values)
-                net_rf.append(ds['RF_LAI'].values)
-            elif info['lc'][i]=='BET':
-                bet_mod.append(ds['MOD_LAI'].values)
-                bet_rf.append(ds['RF_LAI'].values)
-            elif info['lc'][i]=='BDT':
-                bdt_mod.append(ds['MOD_LAI'].values)
-                bdt_rf.append(ds['RF_LAI'].values)
-            elif info['lc'][i]=='MF':
-                mf_mod.append(ds['MOD_LAI'].values)
-                mf_rf.append(ds['RF_LAI'].values)
-
-        if irow==1:
-            obs.append(ds2['Map_LAI'][0:276].values)
-            rf.append(ds['RF_LAI'].values)
-
-            if info['lc'][i]=='NET':
-                net_obs.append(ds2['Map_LAI'][0:276].values)
-                net_rf.append(ds['RF_LAI'].values)
-            elif info['lc'][i]=='BET':
-                bet_obs.append(ds2['Map_LAI'][0:276].values)
-                bet_rf.append(ds['RF_LAI'].values)
-            elif info['lc'][i]=='BDT':
-                bdt_obs.append(ds2['Map_LAI'][0:276].values)
-                bdt_rf.append(ds['RF_LAI'].values)
-            elif info['lc'][i]=='MF':
-                mf_obs.append(ds2['Map_LAI'][0:276].values)
-                mf_rf.append(ds['RF_LAI'].values)
-
-        if irow==2:
-            obs.append(ds2['Map_LAI'][0:276].values)
-            mod.append(ds['MOD_LAI'].values)
-            if info['lc'][i]=='NET':
-                net_obs.append(ds2['Map_LAI'][0:276].values)
-                net_mod.append(ds['MOD_LAI'].values)
-            elif info['lc'][i]=='BET':
-                bet_obs.append(ds2['Map_LAI'][0:276].values)
-                bet_mod.append(ds['MOD_LAI'].values)
-            elif info['lc'][i]=='BDT':
-                bdt_obs.append(ds2['Map_LAI'][0:276].values)
-                bdt_mod.append(ds['MOD_LAI'].values)
-            elif info['lc'][i]=='MF':
-                mf_obs.append(ds2['Map_LAI'][0:276].values)
-                mf_mod.append(ds['MOD_LAI'].values)
 
     s_size = 400
 
     if (irow==0):
-        plt.scatter(net_mod, net_rf, s=s_size, c=colors[0], linewidths=0.5, label=types[0],alpha=0.8-0*0.06)
-        plt.scatter(bet_mod, bet_rf, s=s_size, c=colors[1], linewidths=0.5, label=types[1],alpha=0.8-1*0.06)
-        plt.scatter(bdt_mod, bdt_rf, s=s_size, c=colors[2], linewidths=0.5, label=types[3],alpha=0.8-3*0.06)
-        plt.scatter(mf_mod , mf_rf , s=s_size, c=colors[4], linewidths=0.5, label=types[4],alpha=0.8-4*0.06)
+        plt.plot(range(12), rf_r2_train, marker='o', c=colors[4], label='RF_Train',alpha=0.8-0*0.06, markersize=20)
+        plt.plot(range(12), rf_r2_test , marker='*', c=colors[4], label='RF_Test' ,alpha=0.8-1*0.06, markersize=25)
+        plt.plot(range(12), lg_r2_train, marker='o', c=colors[5], label='LightGBM_Train',alpha=0.8-0*0.06, markersize=20)
+        plt.plot(range(12), lg_r2_test , marker='*', c=colors[5], label='LightGBM_Test' ,alpha=0.8-1*0.06, markersize=25)
 
-        rf   = np.array(rf).flatten()
-        mod  = np.array(mod).flatten()
-        r    = np.corrcoef(mod, rf)
-        rmse = np.sqrt(np.mean((rf - mod)**2))
-        mae  = np.mean(np.abs(rf - mod))
-        print(r)
+        ax.set_title('(a) R$^{2}$', fontproperties='DejaVu Sans',fontsize=35,loc='left')
+        plt.xlabel("Month", fontsize=40)
+    else:
 
-        lc = info['lc'][i]
-        print("\n",info['site'][i],lc)
+        plt.plot(range(12), rf_rmse_train, marker='o', c=colors[4], label='RF_Train',alpha=0.8-0*0.06, markersize=20)
+        plt.plot(range(12), rf_rmse_test , marker='*', c=colors[4], label='RF_Test' ,alpha=0.8-1*0.06, markersize=25)
+        plt.plot(range(12), lg_rmse_train, marker='o', c=colors[5], label='LightGBM_Train',alpha=0.8-0*0.06, markersize=20)
+        plt.plot(range(12), lg_rmse_test , marker='*', c=colors[5], label='LightGBM_Test' ,alpha=0.8-1*0.06, markersize=25)
+        ax.set_title('(b) RMSE (unit: m$^{2}$/m$^{2}$)', fontproperties='DejaVu Sans',fontsize=35,loc='left')
+        plt.xlabel("Month", fontsize=40)
 
-        plt.text(0, 5.5, 'R = %s\nRMSE = %s\nMAE = %s' % (round(r[0,1],2), round(rmse,2), round(mae,2)), dict(size=35))
-        ax.set_title('(A) 14 Sites MODIS LAI vs RF LAI', fontproperties='DejaVu Sans',fontsize=35,loc='left')
-        plt.xlabel("MODIS LAI (m$^{2}$/m$^{2}$)", fontsize=35)
-    if (irow==1):
-        print(net_obs)
-        print(net_rf)
-        plt.scatter(net_obs, net_rf, s=s_size, c=colors[0], linewidths=0.5, label=types[0],alpha=0.8-0*0.06)
-        plt.scatter(bet_obs, bet_rf, s=s_size, c=colors[1], linewidths=0.5, label=types[1],alpha=0.8-1*0.06)
-        plt.scatter(bdt_obs, bdt_rf, s=s_size, c=colors[2], linewidths=0.5, label=types[3],alpha=0.8-3*0.06)
-        plt.scatter(mf_obs , mf_rf , s=s_size, c=colors[4], linewidths=0.5, label=types[4],alpha=0.8-4*0.06)
+    # ds = ds.dropna(subset=['map','mod'])
+    plt.xlim(-0.5,12.1)
+    plt.ylim(-0.01,1.01)
 
-        rf = np.array(rf).flatten()
-        obs = np.array(obs).flatten()
-        nan_mask = np.isnan(obs)
-        rf_mask  = rf[~nan_mask]
-        obs_maks = obs[~nan_mask]
-
-        r    = np.corrcoef(obs_maks, rf_mask)
-        rmse = np.sqrt(np.mean((rf_mask - obs_maks)**2))
-        mae  = np.mean(np.abs(rf_mask - obs_maks))
-        print(r)
-        lc = info['lc'][i]
-        print("\n",info['site'][i],lc)
-
-        plt.text(0, 5.5, 'R = %s\nRMSE = %s\nMAE = %s' % (round(r[0,1],2), round(rmse,2), round(mae,2)), dict(size=35))
-        ax.set_title('(B) 14 Sites OBS LAI vs RF LAI', fontproperties='DejaVu Sans',fontsize=35,loc='left')
-        plt.xlabel("Site LAI (m$^{2}$/m$^{2}$)", fontsize=35)
-    if (irow==2):
-        plt.scatter(net_obs, net_mod, s=s_size, c=colors[0], linewidths=0.5, label=types[0],alpha=0.8-0*0.06)
-        plt.scatter(bet_obs, bet_mod, s=s_size, c=colors[1], linewidths=0.5, label=types[1],alpha=0.8-1*0.06)
-        plt.scatter(bdt_obs, bdt_mod, s=s_size, c=colors[2], linewidths=0.5, label=types[3],alpha=0.8-3*0.06)
-        plt.scatter(mf_obs , mf_mod , s=s_size, c=colors[4], linewidths=0.5, label=types[4],alpha=0.8-4*0.06)
-
-        mod = np.array(mod).flatten()
-        obs = np.array(obs).flatten()
-        nan_mask = np.isnan(obs)
-        mod_mask  = mod[~nan_mask]
-        obs_maks = obs[~nan_mask]
-
-        r    = np.corrcoef(obs_maks, mod_mask)
-        rmse = np.sqrt(np.mean((mod_mask - obs_maks)**2))
-        mae  = np.mean(np.abs(mod_mask - obs_maks))
-
-        lc = info['lc'][i]
-        print("\n",info['site'][i],lc)
-
-        plt.text(0, 5.5, 'R = %s\nRMSE = %s\nMAE = %s' % (round(r[0,1],2), round(rmse,2), round(mae,2)), dict(size=35))
-        ax.set_title('(C) 14 Sites OBS LAI vs MODIS LAI', fontproperties='DejaVu Sans',fontsize=35,loc='left')
-        plt.xlabel("Site LAI (m$^{2}$/m$^{2}$)", fontsize=35)
-
-    plt.xlim(-0.5,7.1)
-    plt.ylim(-0.5,7.1)
-
-    x = range(0,8,1)
-    x_label= [i for i in range(0,8,1)]
+    x = range(0,12,1)
+    x_label= [i for i in range(1,13,1)]
 
     ax.set_xticks(ticks=x)
     ax.set_xticklabels(labels=x_label,ha='center',va='top')
-    ax.tick_params(axis='x',which='major',labelsize=40,direction='in',width=2,length=10)
-    ax.tick_params(axis='x',which='minor',labelsize=40,direction='in',width=1,length=5)
-    ax.xaxis.set_minor_locator(MultipleLocator(0.25))
+    ax.tick_params(axis='x',which='major',labelsize=35,direction='in',width=2,length=10)
+    ax.tick_params(axis='x',which='minor',labelsize=0,direction='in',width=0,length=0)
 
-    y = range(0,8,1)
-    y_label = [i for i in range(0,8,1)]
-    ax.tick_params(axis='y',which='major',labelsize=40,direction='in',width=2,length=10)
-    ax.tick_params(axis='y',which='minor',labelsize=40,direction='in',width=1,length=5)
-    ax.yaxis.set_minor_locator(MultipleLocator(0.25))
+    y = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+    y_label = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+    ax.tick_params(axis='y',which='major',labelsize=30,direction='in',width=2,length=10)
+    ax.tick_params(axis='y',which='minor',labelsize=30,direction='in',width=1,length=5)
+    ax.yaxis.set_minor_locator(MultipleLocator(0.05))
     ax.set_yticks(ticks=y)
     plt.yticks(y,y_label)
 
-    if irow==2:
-        plt.ylabel("MODIS LAI (m$^{2}$/m$^{2}$)", fontsize=35)
-    else:
-        plt.ylabel("RF LAI (m$^{2}$/m$^{2}$)", fontsize=35)
-
-    plt.plot((-1, 10), (-1, 10), linewidth=4, ls='--', c='black', label='1:1 line')
-    ax.set_aspect('equal', adjustable='box') 
+    plt.legend(loc='lower left', prop={'size': 25})
     for location in ['left', 'right', 'top', 'bottom']:
         ax.spines[location].set_linewidth(2.5)
-
-# Add the last subplot for the legend only
-legend_axe = plt.subplot(nrow, ncol, 4)
-handles, labels = ax.get_legend_handles_labels()
-leenge_=legend_axe.legend(*ax.get_legend_handles_labels(),loc='lower left',
-    labelspacing=0.4, markerscale=1.5, bbox_to_anchor=(0.2, 0.3),fontsize=40)
-legend_axe.axis('off')
-
-plt.savefig('./Scatter_plot_sma/como_Sites.png', format='png', bbox_inches='tight')
+plt.savefig('./Figure3.pdf', format='pdf', bbox_inches='tight', dpi=600)
 plt.close()

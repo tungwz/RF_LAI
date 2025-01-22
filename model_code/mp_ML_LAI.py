@@ -48,23 +48,29 @@ def load_train_data(reg, iyear, imon):
             lat = lat.flatten()
             lon = lon.flatten()
 
-            eth   = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.ETH_2015.nc'
-            eth_nc= nc4.Dataset('/stu01/dongwz/urban_data/urban_raw/ETH_HTOP/30m/2015/'+eth)
+            eth   = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.ETH_'+str(iyear)+'.nc'
+            eth_nc= nc4.Dataset(f'/tera12/yuanhua/dongwz/urban_data/urban_raw/ETH_HTOP/30m/average_ETH/{iyear}/'+eth)
             htop  = eth_nc['ETH_HTOP'][:,:].flatten()
 
-            raw = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.RAW'+str(iyear)+'.nc'
+            # raw = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.RAW'+str(iyear)+'.nc'
+            tmax= 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.TMAX.nc'
+            tmin= 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.TMIN.nc'
+            prec= 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.PREC.nc'
             vpp = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.VP.nc'
             sww = 'RG_'+str(int(i[0]))+'_'+str(int(i[1]))+'_'+str(int(i[2]))+'_'+str(int(i[3]))+'.SW.nc'
 
-            raw_nc = nc4.Dataset('/tera12/yuanhua/mksrf/raw_5x5/'+raw)
+            # raw_nc = nc4.Dataset('/tera12/yuanhua/mksrf/raw_5x5/'+raw)
+            tmax_nc= nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/tmax/raw/TMAX_5x5/'+tmax)
+            tmin_nc= nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/tmin/raw/TMIN_5x5/'+tmin)
+            prec_nc= nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/prec/raw/PREC_5x5/'+prec)
             vp_nc  = nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/vp/raw/VP_5x5/'+vpp)
             sw_nc  = nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/sw/raw/SW_5x5/'+sww)
 
-            stmax = raw_nc['TMAX'][imon,:,:]
-            stmin = raw_nc['TMIN'][imon,:,:]
-            sprec = raw_nc['PREC'][imon,:,:]
-            svp   = vp_nc ['Band1'][imon,:,:]
-            ssw   = sw_nc ['Band1'][imon,:,:]
+            stmax = tmax_nc['Band1'][imon,:,:]
+            stmin = tmin_nc['Band1'][imon,:,:]
+            sprec = prec_nc['Band1'][imon,:,:]
+            svp   = vp_nc  ['Band1'][imon,:,:]
+            ssw   = sw_nc  ['Band1'][imon,:,:]
 
             ltmax = np.zeros((1200,1200), dtype=float)
             ltmin = np.zeros((1200,1200), dtype=float)
@@ -136,32 +142,36 @@ def load_predict_data(reg, iyear, imon):
 
     if (iyear>=2000 and iyear<2005):
         eth   = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.ETH_2000.nc'
-        eth_nc= nc4.Dataset('/stu01/dongwz/urban_data/urban_raw/ETH_HTOP/30m/2000/'+eth)
+        eth_nc= nc4.Dataset('/tera12/yuanhua/dongwz/urban_data/urban_raw/ETH_HTOP/30m/average_ETH/2000/'+eth)
     elif(iyear>=2005 and iyear<2010):
         eth   = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.ETH_2005.nc'
-        eth_nc= nc4.Dataset('/stu01/dongwz/urban_data/urban_raw/ETH_HTOP/30m/2005/'+eth)
+        eth_nc= nc4.Dataset('/tera12/yuanhua/dongwz/urban_data/urban_raw/ETH_HTOP/30m/average_ETH/2005/'+eth)
     elif(iyear>=2010 and iyear<2015):
         eth   = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.ETH_2010.nc'
-        eth_nc= nc4.Dataset('/stu01/dongwz/urban_data/urban_raw/ETH_HTOP/30m/2010/'+eth)
+        eth_nc= nc4.Dataset('/tera12/yuanhua/dongwz/urban_data/urban_raw/ETH_HTOP/30m/average_ETH/2010/'+eth)
     elif(iyear>=2015):
         eth   = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.ETH_2015.nc'
-        eth_nc= nc4.Dataset('/stu01/dongwz/urban_data/urban_raw/ETH_HTOP/30m/2015/'+eth)
+        eth_nc= nc4.Dataset('/tera12/yuanhua/dongwz/urban_data/urban_raw/ETH_HTOP/30m/average_ETH/2015/'+eth)
 
     htop  = eth_nc['ETH_HTOP'][:,:].flatten()
 
-    raw = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.RAW'+str(iyear)+'.nc'
+    tmax= 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.TMAX.nc'
+    tmin= 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.TMIN.nc'
+    prec= 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.PREC.nc'
     vpp = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.VP.nc'
     sww = 'RG_'+str(int(reg[0]))+'_'+str(int(reg[1]))+'_'+str(int(reg[2]))+'_'+str(int(reg[3]))+'.SW.nc'
 
-    raw_nc = nc4.Dataset('/tera12/yuanhua/mksrf/raw_5x5/'+raw)
+    tmax_nc= nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/tmax/raw/TMAX_5x5/'+tmax)
+    tmin_nc= nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/tmin/raw/TMIN_5x5/'+tmin)
+    prec_nc= nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/prec/raw/PREC_5x5/'+prec)
     vp_nc  = nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/vp/raw/VP_5x5/'+vpp)
     sw_nc  = nc4.Dataset('/stu01/dongwz/hard/forcing/meteor/sw/raw/SW_5x5/'+sww)
 
-    stmax = raw_nc['TMAX'][imon,:,:]
-    stmin = raw_nc['TMIN'][imon,:,:]
-    sprec = raw_nc['PREC'][imon,:,:]
-    svp   = vp_nc ['Band1'][imon,:,:]
-    ssw   = sw_nc ['Band1'][imon,:,:]
+    stmax = tmax_nc['Band1'][imon,:,:]
+    stmin = tmin_nc['Band1'][imon,:,:]
+    sprec = prec_nc['Band1'][imon,:,:]
+    svp   = vp_nc  ['Band1'][imon,:,:]
+    ssw   = sw_nc  ['Band1'][imon,:,:]
 
     ltmax = np.zeros((1200,1200), dtype=float)
     ltmin = np.zeros((1200,1200), dtype=float)
@@ -187,7 +197,7 @@ def load_predict_data(reg, iyear, imon):
     tmin[lc==0] = 0
     prec[lc==0] = 0
 
-    return lc, lat, lon, htop, tmax, tmin, prec, vp, sw, vpd #, lat_, lon_
+    return lc, lat, lon, htop, tmax, tmin, prec, vp, sw, vpd
 
 # Producing LAI data of ever 5x5deg region
 def process_region(ireg):
@@ -212,17 +222,17 @@ def process_region(ireg):
     dataset.close()
 
 
-reg_ = np.loadtxt('reg_5x5')
+reg_ = np.loadtxt('./reg_file/reg_5x5')
 
 r2  = np.zeros((12,1), dtype=float)
 rmse= np.zeros((12,1), dtype=float)
 mae = np.zeros((12,1), dtype=float)
 
 # loop for iyear
-for iyear in range(2000,2021,1):
+for iyear in range(2000,2023,1):
 
     print('Processing for '+str(iyear)+' ......')
-    reg = np.loadtxt('reg_5x5_'+str(iyear))
+    reg = np.loadtxt('./reg_file/reg_5x5_'+str(iyear))
 
     for i in range(12):
         print('Regressing '+' month '+str(i+1))
@@ -248,11 +258,11 @@ for iyear in range(2000,2021,1):
         test_pre  = automl.predict(x_test )
 
         r2  [i,0] = r2_score(y_test, test_pre)
-        rmse[i,0] = sqrt(mean_squared_error(y_test, test_pre))
+        rmse[i,0] = sqrt(mean_squared_error(y_test, test_pre))#ubrmse(y_test, test_pre)
         mae [i,0] = mean_absolute_error(y_test, test_pre)
 
-        print(" Train r2_score is %f, RMSE is %f, MAE is %f" %(r2_score(y_train, train_pre),sqrt(mean_squared_error(y_train, train_pre)),mean_absolute_error(y_train, train_pre)))
-        print(" Test r2_score is %f, RMSE is %f, MAE is %f" %(r2_score(y_test, test_pre), sqrt(mean_squared_error(y_test, test_pre)),mean_absolute_error(y_test, test_pre)))
+        print(" Train r2_score is %f, RMSE is %f, MAE is %f" %(r2_score(y_train, train_pre),sqrt(mean_squared_error(y_train, train_pre)),mean_absolute_error(y_train, train_pre)))#.astype('str')))
+        print(" Test r2_score is %f, RMSE is %f, MAE is %f" %(r2_score(y_test, test_pre), sqrt(mean_squared_error(y_test, test_pre)),mean_absolute_error(y_test, test_pre)))#.astype('str')))
 
         num_processes = 50
         pool = mp.Pool(processes=num_processes)
